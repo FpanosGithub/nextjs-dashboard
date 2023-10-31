@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
 import React, { useState } from 'react';
 
-function createPageURL (page:number){
+function createPageURL (page:any){
   return `/${page}`
 }
 
