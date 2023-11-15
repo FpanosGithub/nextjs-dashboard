@@ -5,14 +5,21 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
 import React, { useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-function createPageURL (page:any){
-  return `/${page}`
-}
+
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
-  const [currentPage, setCurrentPage] = useState(0)
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
   const allPages = generatePagination(currentPage, totalPages);
+
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
 
   return (
     <div className="inline-flex">
